@@ -44,6 +44,7 @@ func createPeerMap(labels: [String],subGrids: [[String]]) -> [String: [String]]{
                                     for v in subGrid{
                                         values.insert(v)
                                     }
+                                    values.remove(label)//don't contain itself
                                     result.updateValue(Array(values), forKey: label)
                                     break outerLoop
                                 }
@@ -53,7 +54,7 @@ func createPeerMap(labels: [String],subGrids: [[String]]) -> [String: [String]]{
     return result
 }
 
-var peers = createPeerMap(cellLabels, subGrids: subGrids)
+var peerMap = createPeerMap(cellLabels, subGrids: subGrids)
 
 
 func parseSudoku(source:String) -> [String: Set<Int>]{
@@ -71,8 +72,47 @@ func parseSudoku(source:String) -> [String: Set<Int>]{
     }
     return sodoku
 }
-let source:String = "400000805030000000000700000020000060000080400000010000000603070500200000104000000"
+func printSodoku(let sodoku:[String: Set<Int>]){
+    var counter = 0
+    for label in cellLabels{
+        ++counter
+        for n in sodoku[label]!{
+            print(n,terminator:"")
+        }
+        print("  ",terminator:"")
+        if counter % 3 == 0{
+            print("|",terminator:"")
+        }else if counter % 9 == 0{
+            print("")
+        }
+    }
+}
+let source:String = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
 var mySodoku = parseSudoku(source)
+//printSodoku(mySodoku)
+func eliminate(inout sodoku:[String: Set<Int>]){
+    for label in cellLabels{
+        if sodoku[label]!.count == 1{
+            let peers = peerMap[label]!
+            let value = sodoku[label]!.first!
+            eliminatePeers(&sodoku, peers: peers,valueToRemove: value)
+        }
+    }
+}
+func eliminatePeers(inout sodoku:[String: Set<Int>],let peers:[String],valueToRemove:Int){
+    for label in peers{
+        let oldCount = sodoku[label]!.count
+        if (sodoku[label]!.contains(valueToRemove) && oldCount == 1){
+            assert(false)
+        }
+        sodoku[label]!.remove(valueToRemove)
+        if oldCount == 2 && sodoku[label]!.count == 1{
+            let newPeers = peerMap[label]!
+            let value = sodoku[label]!.first!
+            eliminatePeers(&sodoku, peers: newPeers,valueToRemove: value)
+        }
+    }
+}
 
-
+eliminate(&mySodoku)
 

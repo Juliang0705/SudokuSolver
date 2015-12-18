@@ -1,6 +1,6 @@
 //: Playground - noun: a place where people can play
 
-import Cocoa
+import Foundation
 
 func cross(A A:String,B:String)->[String]{
     var result = [String]()
@@ -12,7 +12,7 @@ func cross(A A:String,B:String)->[String]{
     return result
 }
 
-var cellLabels:[String] = cross(A:"ABCDEFGI", B: "123456789")
+var cellLabels:[String] = cross(A:"ABCDEFGHI", B: "123456789")
 var subGrids:[[String]] = [
     ["A1","A2","A3","B1","B2","B3","C1","C2","C3"],
     ["A4","A5","A6","B4","B5","B6","C4","C5","C6"],
@@ -39,18 +39,18 @@ func createPeerMap(labels: [String],subGrids: [[String]]) -> [String: [String]]{
             values.insert("\(letter)" + "\(secondNumber)")
         }
         outerLoop:        for subGrid in subGrids{
-                            for elem in subGrid{
-                                if elem == label{
-                                    for v in subGrid{
-                                        values.insert(v)
-                                    }
-                                    values.remove(label)//don't contain itself
-                                    result.updateValue(Array(values), forKey: label)
-                                    break outerLoop
-                                }
+            for elem in subGrid{
+                if elem == label{
+                    for v in subGrid{
+                        values.insert(v)
+                    }
+                    values.remove(label)//don't contain itself
+                    result.updateValue(Array(values), forKey: label)
+                    break outerLoop
                 }
             }
         }
+    }
     return result
 }
 
@@ -59,7 +59,7 @@ var peerMap = createPeerMap(cellLabels, subGrids: subGrids)
 
 func parseSudoku(source:String) -> [String: Set<Int>]{
     var sodoku = [String: Set<Int>]()
-//    print (source.characters.count)
+    //    print (source.characters.count)
     assert(source.characters.count == 81)
     for i in 0..<cellLabels.count{
         let number: Int = Int(String(source[source.startIndex.advancedBy(i)]))!
@@ -80,15 +80,16 @@ func printSodoku(let sodoku:[String: Set<Int>]){
             print(n,terminator:"")
         }
         print("  ",terminator:"")
-        if counter % 3 == 0{
-            print("|",terminator:"")
-        }else if counter % 9 == 0{
+        if counter % 9 == 0{
             print("")
+        }else if counter % 3 == 0{
+            print("|",terminator:"")
         }
     }
 }
 let source:String = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
-var mySodoku = parseSudoku(source)
+let source2:String = "400000805030000000000700000020000060000080400000010000000603070500200000104000000"
+var mySodoku = parseSudoku(source2)
 //printSodoku(mySodoku)
 func eliminate(inout sodoku:[String: Set<Int>]){
     for label in cellLabels{
@@ -119,6 +120,7 @@ func eliminatePeers(inout sodoku:[String: Set<Int>],let peers:[String],valueToRe
         }
     }
 }
-
+//print (mySodoku.keys)
 eliminate(&mySodoku)
+printSodoku(mySodoku)
 

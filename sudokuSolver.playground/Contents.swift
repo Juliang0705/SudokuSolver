@@ -56,3 +56,23 @@ func createPeerMap(labels: [String],subGrids: [[String]]) -> [String: [String]]{
 var peers = createPeerMap(cellLabels, subGrids: subGrids)
 
 
+func parseSudoku(source:String) -> [String: Set<Int>]{
+    var sodoku = [String: Set<Int>]()
+//    print (source.characters.count)
+    assert(source.characters.count == 81)
+    for i in 0..<cellLabels.count{
+        let number: Int = Int(String(source[source.startIndex.advancedBy(i)]))!
+        let label:String = cellLabels[cellLabels.startIndex.advancedBy(i)]
+        if number != 0 {
+            sodoku.updateValue(Set([number]), forKey: label)
+        }else{
+            sodoku.updateValue(Set([1,2,3,4,5,6,7,8,9]), forKey: label)
+        }
+    }
+    return sodoku
+}
+let source:String = "400000805030000000000700000020000060000080400000010000000603070500200000104000000"
+var mySodoku = parseSudoku(source)
+
+
+

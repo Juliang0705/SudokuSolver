@@ -88,19 +88,22 @@ func printSodoku(let sodoku:[String: Set<Int>]){
     }
 }
 let source:String = "003020600900305001001806400008102900700000008006708200002609500800203009005010300"
-let source2:String = "400000805030000000000700000020000060000080400000010000000603070500200000104000000"
+let source2:String = "850002400720000009004000000000107002305000900040000000000080070017000000000036040"
 var mySodoku = parseSudoku(source2)
 //printSodoku(mySodoku)
-func eliminate(inout sodoku:[String: Set<Int>]){
+func eliminate(inout sodoku:[String: Set<Int>]) -> Bool{
     for label in cellLabels{
         if sodoku[label]!.count == 1{
             let peers = peerMap[label]!
             let value = sodoku[label]!.first!
-            eliminatePeers(&sodoku, peers: peers,valueToRemove: value)
+            if eliminatePeers(&sodoku, peers: peers,valueToRemove: value) == false{
+                return false
+            }
         }
     }
+    return true
 }
-func eliminatePeers(inout sodoku:[String: Set<Int>],let peers:[String],valueToRemove:Int){
+func eliminatePeers(inout sodoku:[String: Set<Int>],let peers:[String],valueToRemove:Int) -> Bool{
     for label in peers{
         if sodoku[label]!.contains(valueToRemove) == false {
             continue
@@ -110,17 +113,51 @@ func eliminatePeers(inout sodoku:[String: Set<Int>],let peers:[String],valueToRe
         }
         sodoku[label]!.remove(valueToRemove)
         if sodoku[label]!.count == 0{
-            //assert(false,"Eliminate last value")
-            print("Error")
-            return
+            return false
         }else if sodoku[label]!.count == 1{
             let value = sodoku[label]!.first!
             let newPeers = peerMap[label]!
-            eliminatePeers(&sodoku, peers: newPeers, valueToRemove: value)
+            if eliminatePeers(&sodoku, peers: newPeers, valueToRemove: value) == false{
+                return false
+            }
+        }
+    }
+    return true
+}
+func isSolved(let sodoku:[String: Set<Int>]) -> Bool{
+    for label in cellLabels{
+        if sodoku[label]!.count != 1{
+            return false
+        }
+    }
+    return true
+}
+func cellWithleastPossibilities(let sodoku:[String: Set<Int>]) -> String{
+    var current:String = cellLabels.first!
+    for label in cellLabels{
+        if sodoku[current]!.count == 1 {
+            current = label
+        }
+        else if sodoku[label]!.count != 1 && sodoku[label]!.count < sodoku[current]!.count{
+            current = label
+        }
+    }
+    return current
+}
+var result:[String:Set<Int>]?
+func solveSodoku(let sodoku:[String:Set<Int>]){
+    if isSolved(sodoku){
+        result = sodoku
+    }
+    let targetCell:String = cellWithleastPossibilities(sodoku)
+    for possibility in sodoku[targetCell]!{
+        var sodokuCopy = sodoku
+        sodokuCopy[targetCell]!.remove(possibility)
+        if (eliminate(&sodokuCopy)){
+             solveSodoku(sodokuCopy)
         }
     }
 }
-//print (mySodoku.keys)
 eliminate(&mySodoku)
-printSodoku(mySodoku)
-
+solveSodoku(mySodoku)
+printSodoku(result!)

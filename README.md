@@ -1,2 +1,2 @@
 # SudokuSolver
-Solve sudoku using Crook's algorithm
+Solve sudoku in swift

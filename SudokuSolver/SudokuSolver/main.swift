@@ -11,8 +11,8 @@ var solver:SudokuSolver = SudokuSolver()
 //printFormattedSudoku() prints the most recent solved sodoku
 //getRawSudoku() returns the most recent solved sodoku as a string
 
-func solveAndPrint(sodoku:String) throws{
-    try solver.solve(sudokuFromString: sodoku)
+func solveAndPrint(sudoku:String) throws{
+    try solver.solve(sudokuFromString: sudoku)
     try solver.printFormattedSudoku()
     try print(solver.getRawSudoku())
     print("\n")

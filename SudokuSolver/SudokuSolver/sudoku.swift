@@ -1,6 +1,6 @@
 //
-//  sodoku.swift
-//  Sodoku
+//  sudoku.swift
+//  Sudoku
 //
 //  Created by Juliang Li on 12/19/15.
 //  Copyright © 2015 Juliang. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-//sodoku is defined as a dictionary with cell label as its key 
+//sudoku is defined as a dictionary with cell label as its key 
 //and a set of a possible numbers as its value
 typealias Sudoku = [String:Set<Int>]
 

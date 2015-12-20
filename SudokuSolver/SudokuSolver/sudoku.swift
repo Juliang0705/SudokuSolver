@@ -173,7 +173,7 @@ class SudokuSolver{
             return
         }
         // find the solution
-        if isSolved(sudoku){
+        if self.isSolved(sudoku){
             self.solvedSudoku = sudoku
             return
         }

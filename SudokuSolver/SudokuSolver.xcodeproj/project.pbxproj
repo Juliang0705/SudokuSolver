@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		38349E4E1C25FE2100DFA061 /* sodoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38349E4D1C25FE2100DFA061 /* sodoku.swift */; };
-		388ABE471C24B0D300DA583E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388ABE461C24B0D300DA583E /* main.swift */; };
+		38349E5E1C265DFD00DFA061 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38349E5D1C265DFD00DFA061 /* main.swift */; };
+		38349E651C265E2900DFA061 /* sudoku.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38349E641C265E2900DFA061 /* sudoku.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		388ABE411C24B0D300DA583E /* CopyFiles */ = {
+		38349E581C265DFD00DFA061 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -24,13 +24,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		38349E4D1C25FE2100DFA061 /* sodoku.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sodoku.swift; sourceTree = "<group>"; };
-		388ABE431C24B0D300DA583E /* Sodoku */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Sodoku; sourceTree = BUILT_PRODUCTS_DIR; };
-		388ABE461C24B0D300DA583E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		38349E5A1C265DFD00DFA061 /* SudokuSolver */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SudokuSolver; sourceTree = BUILT_PRODUCTS_DIR; };
+		38349E5D1C265DFD00DFA061 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		38349E641C265E2900DFA061 /* sudoku.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sudoku.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		388ABE401C24B0D300DA583E /* Frameworks */ = {
+		38349E571C265DFD00DFA061 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -40,97 +40,97 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		388ABE3A1C24B0D300DA583E = {
+		38349E511C265DFD00DFA061 = {
 			isa = PBXGroup;
 			children = (
-				388ABE451C24B0D300DA583E /* Sodoku */,
-				388ABE441C24B0D300DA583E /* Products */,
+				38349E5C1C265DFD00DFA061 /* SudokuSolver */,
+				38349E5B1C265DFD00DFA061 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		388ABE441C24B0D300DA583E /* Products */ = {
+		38349E5B1C265DFD00DFA061 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				388ABE431C24B0D300DA583E /* Sodoku */,
+				38349E5A1C265DFD00DFA061 /* SudokuSolver */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		388ABE451C24B0D300DA583E /* Sodoku */ = {
+		38349E5C1C265DFD00DFA061 /* SudokuSolver */ = {
 			isa = PBXGroup;
 			children = (
-				388ABE461C24B0D300DA583E /* main.swift */,
-				38349E4D1C25FE2100DFA061 /* sodoku.swift */,
+				38349E5D1C265DFD00DFA061 /* main.swift */,
+				38349E641C265E2900DFA061 /* sudoku.swift */,
 			);
-			path = Sodoku;
+			path = SudokuSolver;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		388ABE421C24B0D300DA583E /* Sodoku */ = {
+		38349E591C265DFD00DFA061 /* SudokuSolver */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 388ABE4A1C24B0D300DA583E /* Build configuration list for PBXNativeTarget "Sodoku" */;
+			buildConfigurationList = 38349E611C265DFD00DFA061 /* Build configuration list for PBXNativeTarget "SudokuSolver" */;
 			buildPhases = (
-				388ABE3F1C24B0D300DA583E /* Sources */,
-				388ABE401C24B0D300DA583E /* Frameworks */,
-				388ABE411C24B0D300DA583E /* CopyFiles */,
+				38349E561C265DFD00DFA061 /* Sources */,
+				38349E571C265DFD00DFA061 /* Frameworks */,
+				38349E581C265DFD00DFA061 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Sodoku;
-			productName = Sodoku;
-			productReference = 388ABE431C24B0D300DA583E /* Sodoku */;
+			name = SudokuSolver;
+			productName = SudokuSolver;
+			productReference = 38349E5A1C265DFD00DFA061 /* SudokuSolver */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		388ABE3B1C24B0D300DA583E /* Project object */ = {
+		38349E521C265DFD00DFA061 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Juliang;
 				TargetAttributes = {
-					388ABE421C24B0D300DA583E = {
+					38349E591C265DFD00DFA061 = {
 						CreatedOnToolsVersion = 7.2;
 					};
 				};
 			};
-			buildConfigurationList = 388ABE3E1C24B0D300DA583E /* Build configuration list for PBXProject "Sodoku" */;
+			buildConfigurationList = 38349E551C265DFD00DFA061 /* Build configuration list for PBXProject "SudokuSolver" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 388ABE3A1C24B0D300DA583E;
-			productRefGroup = 388ABE441C24B0D300DA583E /* Products */;
+			mainGroup = 38349E511C265DFD00DFA061;
+			productRefGroup = 38349E5B1C265DFD00DFA061 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				388ABE421C24B0D300DA583E /* Sodoku */,
+				38349E591C265DFD00DFA061 /* SudokuSolver */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		388ABE3F1C24B0D300DA583E /* Sources */ = {
+		38349E561C265DFD00DFA061 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38349E4E1C25FE2100DFA061 /* sodoku.swift in Sources */,
-				388ABE471C24B0D300DA583E /* main.swift in Sources */,
+				38349E651C265E2900DFA061 /* sudoku.swift in Sources */,
+				38349E5E1C265DFD00DFA061 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		388ABE481C24B0D300DA583E /* Debug */ = {
+		38349E5F1C265DFD00DFA061 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -174,7 +174,7 @@
 			};
 			name = Debug;
 		};
-		388ABE491C24B0D300DA583E /* Release */ = {
+		38349E601C265DFD00DFA061 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -210,14 +210,14 @@
 			};
 			name = Release;
 		};
-		388ABE4B1C24B0D300DA583E /* Debug */ = {
+		38349E621C265DFD00DFA061 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		388ABE4C1C24B0D300DA583E /* Release */ = {
+		38349E631C265DFD00DFA061 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -227,25 +227,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		388ABE3E1C24B0D300DA583E /* Build configuration list for PBXProject "Sodoku" */ = {
+		38349E551C265DFD00DFA061 /* Build configuration list for PBXProject "SudokuSolver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				388ABE481C24B0D300DA583E /* Debug */,
-				388ABE491C24B0D300DA583E /* Release */,
+				38349E5F1C265DFD00DFA061 /* Debug */,
+				38349E601C265DFD00DFA061 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		388ABE4A1C24B0D300DA583E /* Build configuration list for PBXNativeTarget "Sodoku" */ = {
+		38349E611C265DFD00DFA061 /* Build configuration list for PBXNativeTarget "SudokuSolver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				388ABE4B1C24B0D300DA583E /* Debug */,
-				388ABE4C1C24B0D300DA583E /* Release */,
+				38349E621C265DFD00DFA061 /* Debug */,
+				38349E631C265DFD00DFA061 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 388ABE3B1C24B0D300DA583E /* Project object */;
+	rootObject = 38349E521C265DFD00DFA061 /* Project object */;
 }

@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Sodoku.xcscheme</key>
+		<key>SudokuSolver.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>388ABE421C24B0D300DA583E</key>
+		<key>38349E591C265DFD00DFA061</key>
 		<dict>
 			<key>primary</key>
 			<true/>

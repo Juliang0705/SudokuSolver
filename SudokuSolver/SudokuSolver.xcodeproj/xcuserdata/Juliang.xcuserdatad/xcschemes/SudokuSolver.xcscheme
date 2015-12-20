@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "388ABE421C24B0D300DA583E"
-               BuildableName = "Sodoku"
-               BlueprintName = "Sodoku"
-               ReferencedContainer = "container:Sodoku.xcodeproj">
+               BlueprintIdentifier = "38349E591C265DFD00DFA061"
+               BuildableName = "SudokuSolver"
+               BlueprintName = "SudokuSolver"
+               ReferencedContainer = "container:SudokuSolver.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "388ABE421C24B0D300DA583E"
-            BuildableName = "Sodoku"
-            BlueprintName = "Sodoku"
-            ReferencedContainer = "container:Sodoku.xcodeproj">
+            BlueprintIdentifier = "38349E591C265DFD00DFA061"
+            BuildableName = "SudokuSolver"
+            BlueprintName = "SudokuSolver"
+            ReferencedContainer = "container:SudokuSolver.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "388ABE421C24B0D300DA583E"
-            BuildableName = "Sodoku"
-            BlueprintName = "Sodoku"
-            ReferencedContainer = "container:Sodoku.xcodeproj">
+            BlueprintIdentifier = "38349E591C265DFD00DFA061"
+            BuildableName = "SudokuSolver"
+            BlueprintName = "SudokuSolver"
+            ReferencedContainer = "container:SudokuSolver.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "388ABE421C24B0D300DA583E"
-            BuildableName = "Sodoku"
-            BlueprintName = "Sodoku"
-            ReferencedContainer = "container:Sodoku.xcodeproj">
+            BlueprintIdentifier = "38349E591C265DFD00DFA061"
+            BuildableName = "SudokuSolver"
+            BlueprintName = "SudokuSolver"
+            ReferencedContainer = "container:SudokuSolver.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

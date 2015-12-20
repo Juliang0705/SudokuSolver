@@ -10,16 +10,16 @@ import Foundation
 
 //sodoku is defined as a dictionary with cell label as its key 
 //and a set of a possible numbers as its value
-typealias Sodoku = [String:Set<Int>]
+typealias Sudoku = [String:Set<Int>]
 
 // exception type
-enum SodokuError: ErrorType{
+enum SudokuError: ErrorType{
     case ParsingError
-    case IncorrectSodokuError
-    case UnsolvedSodokuError
+    case IncorrectSudokuError
+    case UnsolvedSudokuError
 }
 
-class SodokuSolver{
+class SudokuSolver{
 //internal data
     // an array with all the labels
     private var cellLabels:[String]!
@@ -39,8 +39,11 @@ class SodokuSolver{
         ["G7","G8","G9","H7","H8","H9","I7","I8","I9"]
     ]
     
-    private var originalSodoku:Sodoku? = nil
-    private var solvedSodoku:Sodoku? = nil
+    private var originalSudoku:Sudoku? = nil
+    private var solvedSudoku:Sudoku? = nil
+    
+    private let queue:dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    private var group:dispatch_group_t = dispatch_group_create();
     
 //internal helper functions
     private func makeLabels(A A:String,B:String)->[String]{
@@ -81,15 +84,19 @@ class SodokuSolver{
                 }
                 return result
     }
-    private func parseSodoku(source: String) throws{
+    
+// parse a sodoku from a string horizontally
+// 0 stands for empty
+
+    private func parseSudoku(source: String) throws{
                 if source.characters.count != 81{
-                    throw SodokuError.ParsingError
+                    throw SudokuError.ParsingError
                 }
-                var sodoku:Sodoku = Sodoku()
+                var sodoku:Sudoku = Sudoku()
                 for i in 0..<cellLabels.count{
                     let number: Int? = Int(String(source[source.startIndex.advancedBy(i)]))
                     if number == nil{
-                        throw SodokuError.ParsingError
+                        throw SudokuError.ParsingError
                     }
                     let label:String = cellLabels[cellLabels.startIndex.advancedBy(i)]
                     if number != 0 {
@@ -98,92 +105,106 @@ class SodokuSolver{
                         sodoku.updateValue(Set([1,2,3,4,5,6,7,8,9]), forKey: label)
                     }
                 }
-                self.originalSodoku = sodoku
+                self.originalSudoku = sodoku
     }
+// eliminate possibilities based on given numbers
+    
     private func initialEliminate() -> Bool{
                 for label in self.cellLabels{
-                    if self.originalSodoku![label]!.count == 1{
+                    if self.originalSudoku![label]!.count == 1{
                         let peers = self.peerMap[label]!
-                        let value = self.originalSodoku![label]!.first!
-                        if eliminatePeers(&self.originalSodoku!, peers: peers,valueToRemove: value) == false{
+                        let value = self.originalSudoku![label]!.first!
+                        if eliminatePeers(&self.originalSudoku!, peers: peers,valueToRemove: value) == false{
                             return false
                         }
                     }
                 }
                 return true
     }
-    private func eliminatePeers(inout sodoku:[String: Set<Int>],let peers:[String],valueToRemove:Int) -> Bool{
+// recursively eliminates all its peers' possibilities
+    
+    private func eliminatePeers(inout sudoku:[String: Set<Int>],let peers:[String],valueToRemove:Int) -> Bool{
                 for label in peers{
-                    if sodoku[label]!.contains(valueToRemove) == false {
+                    if sudoku[label]!.contains(valueToRemove) == false {
                         continue
                     }
-                    if sodoku[label]!.count == 1 && sodoku[label]!.first! != valueToRemove{
+                    if sudoku[label]!.count == 1 && sudoku[label]!.first! != valueToRemove{
                         continue
                     }
-                    sodoku[label]!.remove(valueToRemove)
-                    if sodoku[label]!.count == 0{
+                    sudoku[label]!.remove(valueToRemove)
+                    if sudoku[label]!.count == 0{
                         return false
-                    }else if sodoku[label]!.count == 1{
-                        let value = sodoku[label]!.first!
+                    }else if sudoku[label]!.count == 1{
+                        let value = sudoku[label]!.first!
                         let newPeers = self.peerMap[label]!
-                        if eliminatePeers(&sodoku, peers: newPeers, valueToRemove: value) == false{
+                        if eliminatePeers(&sudoku, peers: newPeers, valueToRemove: value) == false{
                             return false
                         }
                     }
                 }
                 return true
     }
-    private func isSolved(let sodoku:[String: Set<Int>]) -> Bool{
+// check if a sodoku is completely solved
+    private func isSolved(let sudoku:[String: Set<Int>]) -> Bool{
                 for label in self.cellLabels{
-                    if sodoku[label]!.count != 1{
+                    if sudoku[label]!.count != 1{
                         return false
                     }
                 }
                 return true
     }
-    private func cellWithleastPossibilities(let sodoku:[String: Set<Int>]) -> String{
+// return the label with the least possibilities
+    private func cellWithleastPossibilities(let sudoku:[String: Set<Int>]) -> String{
                 var current:String = self.cellLabels.first!
                 for label in self.cellLabels{
-                    if sodoku[current]!.count == 1 {
+                    if sudoku[current]!.count == 1 {
                         current = label
                     }
-                    else if sodoku[label]!.count != 1 && sodoku[label]!.count < sodoku[current]!.count{
+                    else if sudoku[label]!.count != 1 && sudoku[label]!.count < sudoku[current]!.count{
                         current = label
                     }
                 }
                 return current
     }
-    private func solveSodoku(let sodoku:[String:Set<Int>]){
-        if self.solvedSodoku != nil{
+// recursively and concurrently try and eliminate possibilities until the sodoku is solved or the sodoku has no solution
+    private func solveSudoku(let sudoku:[String:Set<Int>]){
+        // solution has been found in one of the other threads
+        if self.solvedSudoku != nil{
             return
         }
-        if isSolved(sodoku){
-            self.solvedSodoku = sodoku
+        // find the solution
+        if isSolved(sudoku){
+            self.solvedSudoku = sudoku
             return
         }
-        let targetCell:String = self.cellWithleastPossibilities(sodoku)
         
-        for possibility in sodoku[targetCell]!{
-            var sodokuCopy:Sodoku = sodoku
+        let targetCell:String = self.cellWithleastPossibilities(sudoku)
+        
+        //concurrently eliminate possibilities
+        for possibility in sudoku[targetCell]!{
             
-            sodokuCopy[targetCell]!.remove(possibility)
-            
-            if sodokuCopy[targetCell]!.count == 1{
-                let peers = self.peerMap[targetCell]!
-                let value = sodokuCopy[targetCell]!.first!
-                if eliminatePeers(&sodokuCopy, peers: peers,valueToRemove: value){
-                    solveSodoku(sodokuCopy)
-                }
-            }else{
-                solveSodoku(sodokuCopy)
+            dispatch_group_async(self.group,self.queue){
+                //doing work----
+                var sudokuCopy:Sudoku = sudoku
+                sudokuCopy[targetCell]!.remove(possibility)
+                if sudokuCopy[targetCell]!.count == 1{
+                    let peers = self.peerMap[targetCell]!
+                    let value = sudokuCopy[targetCell]!.first!
+                    if self.eliminatePeers(&sudokuCopy, peers: peers,valueToRemove: value){
+                        self.solveSudoku(sudokuCopy)
+                    }
+                }else{
+                    self.solveSudoku(sudokuCopy)
+               }
+                //end work-----
             }
         }
     }
-    private func printSodoku(let sodoku:[String: Set<Int>]){
+    private func printSudoku(let sudoku:[String: Set<Int>]){
         var counter = 0
         for label in self.cellLabels{
             ++counter
-            for n in sodoku[label]!{
+            for n in sudoku[label]!{
                 print(n,terminator:"")
             }
             print("  ",terminator:"")
@@ -202,30 +223,31 @@ class SodokuSolver{
         self.cellLabels = self.makeLabels(A:"ABCDEFGHI", B: "123456789")
         self.peerMap = self.createPeerMap(self.cellLabels, subGrids: self.subGrids)
     }
-    func solve(sodokuFromString source: String) throws{
-        if solvedSodoku != nil{
-            solvedSodoku = nil
+    func solve(sudokuFromString source: String) throws{
+        if solvedSudoku != nil{
+            solvedSudoku = nil
         }
-        try self.parseSodoku(source)
+        try self.parseSudoku(source)
         self.initialEliminate()
-        self.solveSodoku(self.originalSodoku!)
-        if (solvedSodoku == nil){
-            throw SodokuError.IncorrectSodokuError
+        self.solveSudoku(self.originalSudoku!)
+        dispatch_group_wait(self.group, DISPATCH_TIME_FOREVER);
+        if (solvedSudoku == nil){
+            throw SudokuError.IncorrectSudokuError
         }
     }
-    func printFormattedSodoku() throws{
-        if self.solvedSodoku == nil{
-            throw SodokuError.UnsolvedSodokuError
+    func printFormattedSudoku() throws{
+        if self.solvedSudoku == nil{
+            throw SudokuError.UnsolvedSudokuError
         }
-        self.printSodoku(self.solvedSodoku!)
+        self.printSudoku(self.solvedSudoku!)
     }
-    func getRawSodoku() throws -> String{
-        if self.solvedSodoku == nil{
-            throw SodokuError.UnsolvedSodokuError
+    func getRawSudoku() throws -> String{
+        if self.solvedSudoku == nil{
+            throw SudokuError.UnsolvedSudokuError
         }
         var result:String = ""
         for label in self.cellLabels{
-            result += "\(self.solvedSodoku![label]!.first!)"
+            result += "\(self.solvedSudoku![label]!.first!)"
         }
         return result
     }
